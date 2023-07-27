@@ -64,6 +64,8 @@ function updateDoublet(p1: number, p2: number, no: number, ni: number) {
     }
   });
   doubletPath.attributes.d.value = `m -1.0 -1.5 ${curve(r1, false)} h 2 ${curve(r3, true)} z m 1 3 ${curve(r2, true)}`;
+  doublet.p1.valueAsNumber = p1;
+  doublet.p2.valueAsNumber = p2;
 }
 
 function update() {
@@ -85,6 +87,7 @@ function update() {
   console.log(p, p1, p2, p1 + p2);
 
   singletPath.attributes.d.value = `m -0.5 -1.5 ${curve(r1, false)} h 1 ${curve(r2, true)} z`;
+  singlet.p.valueAsNumber = p;
   updateDoublet(p1, p2, no, ni);
 }
 
