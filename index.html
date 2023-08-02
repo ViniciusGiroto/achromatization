@@ -9,236 +9,318 @@
 </head>
 
 <body>
-  <form id="form-singlet">
-    <h1>Singlet</h1>
+  <main>
+    <form id="form-singlet">
+      <h1>Singlet</h1>
 
-    <svg viewBox="-1 -1.75 2 3.5">
-      <path id="path-singlet" d="m -0.5 -1.5 a 5 5 180 0 0 0 3 h 1 a 5 5 180 0 0 0 -3 z" stroke="currentColor"
-        stroke-width="1%" fill="transparent">
-    </svg>
+      <div class="lens">
+        <svg viewBox="-1.5 -1.75 3 3.5">
+          <path id="path-singlet" d="m -0.5 -1.5 a 5 5 180 0 0 0 3 h 1 a 5 5 180 0 0 0 -3 z" stroke="currentColor"
+            stroke-width="1%" fill="transparent" />
+        </svg>
+        <div class="mediums">
+          <math>
+            <msub>
+              <mi>n</mi>
+              <mi>O</mi>
+            </msub>
+          </math>
+          <math>
+            <msub>
+              <mi>n</mi>
+              <mi>L</mi>
+            </msub>
+          </math>
+          <math>
+            <msub>
+              <mi>n</mi>
+              <mi>I</mi>
+            </msub>
+          </math>
+        </div>
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>n</mi>
-          <mi>O</mi>
-        </msub>
-      </math>
-      <input type="number" name="no" value="1.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>n</mi>
+            <mi>O</mi>
+          </msub>
+        </math>
+        <input type="number" name="no" value="1.0000" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>n</mi>
-          <mi>L</mi>
-        </msub>
-      </math>
-      <input type="number" name="nl" value="1.5168" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>n</mi>
+            <mi>L</mi>
+          </msub>
+        </math>
+        <input type="number" name="nl" value="1.5168" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>n</mi>
-          <mi>I</mi>
-        </msub>
-      </math>
-      <input type="number" name="ni" value="1.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>n</mi>
+            <mi>I</mi>
+          </msub>
+        </math>
+        <input type="number" name="ni" value="1.0000" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>R</mi>
-          <mn>1</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="text" name="r1" value="200.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>1</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="r1">
+        <input type="text" name="r1" value="200.0000" step="0.0001" disabled>
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>R</mi>
-          <mn>2</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="text" name="r2" value="-300.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>2</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="r2">
+        <input type="text" name="r2" value="-300.0000" step="0.0001" disabled>
+      </div>
 
-    <div>
-      <math>
-        <mi>Thickness</mi>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="number" name="d1" value="10.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <mi>f</mi>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="f" checked>
+        <input type="number" name="f" value="100.0000" step="0.0001" disabled>
+      </div>
 
-    <div>
-      <math>
-        <mi>Power</mi>
-        <mtext>&nbsp;(1/mm)</mtext>
-      </math>
-      <input type="number" name="p" value="0.0000" step="0.0001" disabled>
-    </div>
-  </form>
+      <div class="row">
+        <math>
+          <mi>Thickness</mi>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="number" name="d1" value="10.0000" step="0.0001">
+      </div>
 
-  <form id="form-doublet">
-    <h1>Doublet</h1>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>2</mn>
+          </msub>
+          <mo>=</mo>
+          <mo>-</mo>
+          <msub>
+            <mi>R</mi>
+            <mn>1</mn>
+          </msub>
+        </math>
+        <input type="checkbox" name="r1er2" checked>
+      </div>
+    </form>
 
-    <svg viewBox="-1.5 -1.75 3 3.5">
-      <path id="path-doublet" d="m -1 -1.5 a 5 5 180 0 0 0 3 h 2 a 5 5 180 0 0 0 -3 z m 1 3 a 5 5 180 0 0 0 -3"
-        stroke="currentColor" stroke-width="1%" fill="transparent">
-    </svg>
+    <form id="form-doublet">
+      <h1>Doublet</h1>
 
-    <div>
-      <math>
-        <msub>
-          <mi>n</mi>
-          <mn>1</mn>
-        </msub>
-      </math>
-      <input type="number" name="n1" value="1.5168" step="0.0001">
-    </div>
+      <div class="lens">
+        <svg viewBox="-1.5 -1.75 3 3.5">
+          <path id="path-doublet" d="m -1 -1.5 a 5 5 180 0 0 0 3 h 2 a 5 5 180 0 0 0 -3 z m 1 3 a 5 5 180 0 0 0 -3"
+            stroke="currentColor" stroke-width="1%" fill="transparent" />
+        </svg>
+        <div class="mediums">
+          <math>
+            <msub>
+              <mi>n</mi>
+              <mi>O</mi>
+            </msub>
+          </math>
+          <div class="material-doublet">
+            <math>
+              <msub>
+                <mi>n</mi>
+                <mn>1</mn>
+              </msub>
+            </math>
+            <math>
+              <msub>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msub>
+            </math>
+          </div>
+          <math>
+            <msub>
+              <mi>n</mi>
+              <mi>I</mi>
+            </msub>
+          </math>
+        </div>
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>n</mi>
-          <mn>2</mn>
-        </msub>
-      </math>
-      &nbsp; <input type="number" name="n2" value="1.6477" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>n</mi>
+            <mn>1</mn>
+          </msub>
+        </math>
+        <input type="number" name="n1" value="1.5168" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>V</mi>
-          <mn>1</mn>
-        </msub>
-      </math>
-      <input type="number" name="v1" value="64.1700" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>n</mi>
+            <mn>2</mn>
+          </msub>
+        </math>
+        <input type="number" name="n2" value="1.6477" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>V</mi>
-          <mn>2</mn>
-        </msub>
-      </math>
-      <input type="number" name="v2" value="33.8200" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>V</mi>
+            <mn>1</mn>
+          </msub>
+        </math>
+        <input type="number" name="v1" value="64.1700" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>R</mi>
-          <mn>1</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="radio" name="fixed" value="r1">
-      <input type="text" name="r1" value="-300">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>V</mi>
+            <mn>2</mn>
+          </msub>
+        </math>
+        <input type="number" name="v2" value="33.8200" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>R</mi>
-          <mn>2</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="radio" name="fixed" value="r2" checked>
-      <input type="text" name="r2" value="-300">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>1</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="r1">
+        <input type="text" name="r1" value="-300.0000">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>R</mi>
-          <mn>3</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="radio" name="fixed" value="r3">
-      <input type="text" name="r3" value="-300">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>2</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="r2" checked>
+        <input type="text" name="r2" value="-300.0000">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>d</mi>
-          <mn>1</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="number" name="d1" value="5.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>R</mi>
+            <mn>3</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="radio" name="fixed" value="r3">
+        <input type="text" name="r3" value="-300.0000">
+      </div>
 
-    <div>
-      <math>
-        <msub>
-          <mi>d</mi>
-          <mn>2</mn>
-        </msub>
-        <mtext>&nbsp;(mm)</mtext>
-      </math>
-      <input type="number" name="d2" value="5.0000" step="0.0001">
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>d</mi>
+            <mn>1</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="number" name="d1" value="5.0000" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <mi>Power 1</mi>
-        <mtext>&nbsp;(1/mm)</mtext>
-      </math>
-      <input type="number" name="p1" value="0.0000" step="0.0001" disabled>
-    </div>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>d</mi>
+            <mn>2</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="number" name="d2" value="5.0000" step="0.0001">
+      </div>
 
-    <div>
-      <math>
-        <mi>Power 2</mi>
-        <mtext>&nbsp;(1/mm)</mtext>
-      </math>
-      <input type="number" name="p2" value="0.0000" step="0.0001" disabled>
-    </div>
-    <!--
-  </form>
-  <math>
-    <mfrac>
-      <msub>
-        <mi>R</mi>
-        <mn>1</mn>
-      </msub>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>f</mi>
+            <mn>1</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="number" name="f1" value="0.0000" step="0.0001" disabled>
+      </div>
 
-      <msub>
-&nbsp;        <mi>V</mi>
-        <mn>1</mn>
-    </mfrac>
-      </msub>
-    <mo>+</mo>
-    <mfrac>
-      <msub>
-        <mi>R</mi>
-        <mn>1</mn>
-      </msub>
-
-      <msub>
-&nbsp;        <mi>V</mi>
-        <mn>1</mn>
-    </mfrac>
-      </msub>
-    <mo>=</mo>
-    <mn>0</mn>
-  </math>
-  -->
-    <script src="scripts/main.js"></script>
+      <div class="row">
+        <math>
+          <msub>
+            <mi>f</mi>
+            <mn>2</mn>
+          </msub>
+          <mtext>&nbsp;</mtext>
+          <mo>(</mo>
+          <mi>mm</mi>
+          <mo>)</mo>
+        </math>
+        <input type="number" name="f2" value="0.0000" step="0.0001" disabled>
+      </div>
+    </form>
+  </main>
+  <script src="scripts/main.js"></script>
 </body>
-<msub>
 
 </html>

@@ -5,8 +5,8 @@ const singletPath = document.getElementById("path-singlet") as any;
 const doubletForm = document.getElementById("form-doublet") as any;
 const doubletPath = document.getElementById("path-doublet") as any;
 
-const singlet = singletForm.elements as { [key: string]: HTMLInputElement };
-const doublet = doubletForm.elements as { [key: string]: HTMLInputElement };
+const singletInputs = singletForm.elements as { [key: string]: HTMLInputElement };
+const doubletInputs = doubletForm.elements as { [key: string]: HTMLInputElement };
 
 function parseR(value: string): number {
   if ("infinity".startsWith(value.toLowerCase())) return Infinity;
@@ -32,28 +32,43 @@ function curve(radius: number, invert: boolean): string {
 }
 
 function updateDoublet(p1: number, p2: number, no: number, ni: number) {
-  const fixed = doublet.fixed.value;
+  const fixed = doubletInputs.fixed.value;
 
-  const n1 = doublet.n1.valueAsNumber;
-  const n2 = doublet.n2.valueAsNumber;
+  const n1 = doubletInputs.n1.valueAsNumber;
+  const n2 = doubletInputs.n2.valueAsNumber;
 
-  const d1 = doublet.d1.valueAsNumber;
-  const d2 = doublet.d2.valueAsNumber;
+  const d1 = doubletInputs.d1.valueAsNumber;
+  const d2 = doubletInputs.d2.valueAsNumber;
 
   let r1: number, r2: number, r3: number;
+  /*
+    if (fixed === "r1") {
+      r1 = parseR(doublet.r1.value);
+      r2 = (n2 - n1) * (1 - (n1 - no) * d1 / n1 / r1) / (p1 - (n1 - no) / r1);
+      r3 = (ni - n2) * (1 - (n2 - n1) * d2 / n2 / r2) / (p2 - (n2 - n1) / r2);
+    } else if (fixed === "r2") {
+      r2 = parseR(doublet.r2.value);
+      r1 = (n1 - no) * (1 - (n2 - n1) * d1 / n1 / r2) / (p1 - (n2 - n1) / r2);
+      r3 = (ni - n2) * (1 - (n2 - n1) * d2 / n2 / r2) / (p2 - (n2 - n1) / r2);
+    } else {
+      r3 = parseR(doublet.r3.value);
+      r2 = (n2 - n1) * (1 - (ni - n2) * d2 / n2 / r3) / (p2 - (ni - n2) / r3);
+      r1 = (n1 - no) * (1 - (n2 - n1) * d1 / n1 / r2) / (p1 - (n2 - n1) / r2);
+    }
+  */
 
   if (fixed === "r1") {
-    r1 = parseR(doublet.r1.value);
-    r2 = (n2 - n1) * (1 - (n1 - no) * d1 / n1 / r1) / (p1 - (n1 - no) / r1);
-    r3 = (ni - n2) * (1 - (n2 - n1) * d2 / n2 / r2) / (p2 - (n2 - n1) / r2);
+    r1 = parseR(doubletInputs.r1.value);
+    r2 = (1 - n1) * (1 - (n1 - no) * d1 / n1 / r1) / (p1 - (n1 - no) / r1);
+    r3 = (ni - n2) * (1 - (n2 - 1) * d2 / n2 / r2) / (p2 - (n2 - 1) / r2);
   } else if (fixed === "r2") {
-    r2 = parseR(doublet.r2.value);
-    r1 = (n1 - no) * (1 - (n2 - n1) * d1 / n1 / r2) / (p1 - (n2 - n1) / r2);
-    r3 = (ni - n2) * (1 - (n2 - n1) * d2 / n2 / r2) / (p2 - (n2 - n1) / r2);
+    r2 = parseR(doubletInputs.r2.value);
+    r1 = (n1 - no) * (1 - (1 - n1) * d1 / n1 / r2) / (p1 - (1 - n1) / r2);
+    r3 = (ni - n2) * (1 - (n2 - 1) * d2 / n2 / r2) / (p2 - (n2 - 1) / r2);
   } else {
-    r3 = parseR(doublet.r3.value);
-    r2 = (n2 - n1) * (1 - (ni - n2) * d2 / n2 / r3) / (p2 - (ni - n2) / r3);
-    r1 = (n1 - no) * (1 - (n2 - n1) * d1 / n1 / r2) / (p1 - (n2 - n1) / r2);
+    r3 = parseR(doubletInputs.r3.value);
+    r2 = (n2 - 1) * (1 - (ni - n2) * d2 / n2 / r3) / (p2 - (ni - n2) / r3);
+    r1 = (n1 - no) * (1 - (1 - n1) * d1 / n1 / r2) / (p1 - (1 - n1) / r2);
   }
 
   const radius = { r1, r2, r3 };
@@ -64,30 +79,90 @@ function updateDoublet(p1: number, p2: number, no: number, ni: number) {
     }
   });
   doubletPath.attributes.d.value = `m -1.0 -1.5 ${curve(r1, false)} h 2 ${curve(r3, true)} z m 1 3 ${curve(r2, true)}`;
-  doublet.p1.valueAsNumber = p1;
-  doublet.p2.valueAsNumber = p2;
+  doubletInputs.f1.valueAsNumber = 1 / p1;
+  doubletInputs.f2.valueAsNumber = 1 / p2;
 }
 
 function update() {
-  const r1 = parseR(singlet.r1.value);
-  const r2 = parseR(singlet.r2.value);
+  const fixed = singletInputs.fixed.value;
+  const r1er2 = singletInputs.r1er2.checked;
 
-  const no = singlet.no.valueAsNumber;
-  const nl = singlet.nl.valueAsNumber;
-  const ni = singlet.ni.valueAsNumber;
+  /*
+  singletForm.querySelectorAll("input[type=radio]+input").forEach((input: any) => {
+    input.disabled = input.name != fixed;
+  });
+  */
 
-  const v1 = doublet.v1.valueAsNumber;
-  const v2 = doublet.v2.valueAsNumber;
+  const no = singletInputs.no.valueAsNumber;
+  const nl = singletInputs.nl.valueAsNumber;
+  const ni = singletInputs.ni.valueAsNumber;
 
-  const p = singletPower(no, nl, ni, r1, r2, singlet.d1.valueAsNumber);
+  const v1 = doubletInputs.v1.valueAsNumber;
+  const v2 = doubletInputs.v2.valueAsNumber;
 
-  const p1 = p * v1 / (v1 - v2);
-  const p2 = p * v2 / (v2 - v1);
+  const d1 = singletInputs.d1.valueAsNumber;
 
-  console.log(p, p1, p2, p1 + p2);
+  const singlet = {
+    r1: 0,
+    r2: 0,
+    p: 0,
+    f: 0,
+  }
 
-  singletPath.attributes.d.value = `m -0.5 -1.5 ${curve(r1, false)} h 1 ${curve(r2, true)} z`;
-  singlet.p.valueAsNumber = p;
+  if (r1er2) {
+    if (fixed === "f") {
+      singlet.f = parseR(singletInputs.f.value);
+      singlet.p = 1 / singlet.f;
+
+      let a = nl * (ni - 2 * nl + no);
+      let b = d1 * (-ni * nl + nl * nl + ni * no - nl * no);
+      let c = a * a - 4 * nl * b * singlet.p;
+
+      singlet.r1 = (nl * (-ni + 2 * nl - no) + Math.sqrt(c)) / (2 * nl * singlet.p);
+      singlet.r2 = -singlet.r1;
+    } else {
+      if (fixed === "r1") {
+        singlet.r2 = -(singlet.r1 = parseR(singletInputs.r1.value));
+      } else {
+        singlet.r1 = -(singlet.r2 = parseR(singletInputs.r2.value));
+      }
+
+      singlet.p = (d1 * ni * nl - d1 * nl * nl - d1 * ni * no + d1 * nl * no - ni * nl * singlet.r1 + 2 * nl * nl * singlet.r1 - nl * no * singlet.r1) / (nl * singlet.r1 * singlet.r1);
+      singlet.f = 1 / singlet.p;
+    }
+  } else {
+    if (fixed === "f") {
+      singlet.r1 = parseR(singletInputs.r1.value);
+      singlet.r2 = parseR(singletInputs.r2.value);
+      singlet.p = singletPower(no, nl, ni, singlet.r1, singlet.r2, singletInputs.d1.valueAsNumber);
+    } else if (fixed === "r1") {
+      singlet.p = 1 / parseR(singletInputs.f.value);
+      singlet.r2 = parseR(singletInputs.r2.value);
+      singlet.r1 = ((nl - no) * (-(d1 * ni) + d1 * nl + nl * singlet.r2)) / (nl * (-ni + nl + singlet.p * singlet.r2));
+    } else { // r2
+      singlet.p = 1 / parseR(singletInputs.f.value);
+      singlet.r1 = parseR(singletInputs.r1.value);
+      singlet.r2 = ((ni - nl) * (d1 * nl - d1 * no - nl * singlet.r1)) / (nl * (nl - no - singlet.p * singlet.r1));
+    }
+
+    singlet.f = 1 / singlet.p;
+  }
+
+
+  singletForm.querySelectorAll("input[type=radio]+input").forEach((input: any) => {
+    input.disabled = (input.name === fixed) !== r1er2;
+
+    if (input.disabled) {
+      input.value = singlet[input.name];
+    }
+  });
+
+  const p1 = singlet.p * v1 / (v1 - v2);
+  const p2 = singlet.p * v2 / (v2 - v1);
+
+  console.log(singlet.p, p1, p2, p1 + p2);
+
+  singletPath.attributes.d.value = `m -0.5 -1.5 ${curve(singlet.r1, false)} h 1 ${curve(singlet.r2, true)} z`;
   updateDoublet(p1, p2, no, ni);
 }
 
