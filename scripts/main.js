@@ -58,10 +58,15 @@ function updateDoublet(p1, p2, no, ni) {
         r1 = (n1 - no) * (1 - (1 - n1) * d1 / n1 / r2) / (p1 - (1 - n1) / r2);
         r3 = (ni - n2) * (1 - (n2 - 1) * d2 / n2 / r2) / (p2 - (n2 - 1) / r2);
     }
-    else {
+    else if (fixed === "r3") {
         r3 = parseR(doubletInputs.r3.value);
         r2 = (n2 - 1) * (1 - (ni - n2) * d2 / n2 / r3) / (p2 - (ni - n2) / r3);
         r1 = (n1 - no) * (1 - (1 - n1) * d1 / n1 / r2) / (p1 - (1 - n1) / r2);
+    }
+    else {
+        r1 = (-n1 + 2 * n1 * n1 - n1 * no + Math.sqrt((n1 - 2 * n1 * n1 + n1 * no) ** 2 - 4 * n1 * d1 * p1 * (-n1 + n1 * n1 + no - n1 * no))) / (2 * n1 * p1);
+        r2 = -r1;
+        r3 = (ni - n2) * (1 - (n2 - 1) * d2 / n2 / r2) / (p2 - (n2 - 1) / r2);
     }
     const radius = { r1, r2, r3 };
     doubletForm.querySelectorAll("input[name^=r]").forEach((input) => {
@@ -76,7 +81,7 @@ function updateDoublet(p1, p2, no, ni) {
 }
 function update() {
     const fixed = singletInputs.fixed.value;
-    const r1er2 = singletInputs.r1er2.checked;
+    const r2emr1 = singletInputs.r2emr1.checked;
     /*
     singletForm.querySelectorAll("input[type=radio]+input").forEach((input: any) => {
       input.disabled = input.name != fixed;
@@ -94,7 +99,7 @@ function update() {
         p: 0,
         f: 0,
     };
-    if (r1er2) {
+    if (r2emr1) {
         if (fixed === "f") {
             singlet.f = parseR(singletInputs.f.value);
             singlet.p = 1 / singlet.f;
@@ -134,7 +139,7 @@ function update() {
         singlet.f = 1 / singlet.p;
     }
     singletForm.querySelectorAll("input[type=radio]+input").forEach((input) => {
-        input.disabled = (input.name === fixed) !== r1er2;
+        input.disabled = (input.name === fixed) !== r2emr1;
         if (input.disabled) {
             input.value = singlet[input.name];
         }
